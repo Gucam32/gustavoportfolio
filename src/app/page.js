@@ -11,9 +11,11 @@ import Experiencias from "@/components/sections/Experiencias";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
 import Inspiration from "@/components/sections/Inspiration";
+import PorqueDireito from "@/components/sections/PorqueDireito";
 
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(0);
   const { scrollY } = useScroll({
     smooth: true,
     smoothTime: 0.6
@@ -22,11 +24,14 @@ export default function Home() {
   // Calculate opacity for hero background
   const bgOpacity = useTransform(
     scrollY,
-    [0, window.innerHeight * 0.5], // Start fading at 50% of viewport height
+    [0, viewportHeight * 0.5], // Use state variable instead of window.innerHeight
     [1, 0]
   );
 
   useEffect(() => {
+    // Set viewport height after component mounts
+    setViewportHeight(window.innerHeight);
+
     // Add smooth scroll behavior to html element
     document.documentElement.style.scrollBehavior = 'smooth';
     
@@ -34,9 +39,16 @@ export default function Home() {
       setScrollPosition(window.scrollY);
     };
 
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight);
+    };
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
       document.documentElement.style.scrollBehavior = 'auto';
     };
   }, []);
@@ -53,12 +65,12 @@ export default function Home() {
       <div className="relative z-10">
         <Navbar scrollPosition={scrollPosition} />
         <Hero scrollPosition={scrollPosition} />
+        <PorqueDireito/>
         <Trajetoria />
         <Filosofia />
         <Direito />
         <Inspiration /> 
         <Experiencias />
-        <Contact />
         <Footer />
       </div>
     </div>
