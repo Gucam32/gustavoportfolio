@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="flex space-x-6">
 
             <a 
-              href="https://instagram.com/gustavocampos" 
+              href="https://www.instagram.com/gustavof.campos/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:text-amber-300 transition-colors"
@@ -20,7 +20,7 @@ export default function Footer() {
               </svg>
             </a>
             <a 
-              href="https://linkedin.com/in/gustavocampos" 
+              href="#" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:text-amber-300 transition-colors"
