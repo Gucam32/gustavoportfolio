@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gustavo França - Legal Portfolio
 
-## Getting Started
+A modern portfolio showcasing Gustavo's academic journey in Law, professional experiences, and commitment to social justice through legal knowledge.
 
-First, run the development server:
+## 📚 About
+
+This portfolio presents:
+- Academic path in Law School
+- Practical experiences and legal simulations
+- Leadership in Criminal Law Academic League
+- Legal consulting knowledge
+- Photo gallery of events and institutional visits
+
+## 🛠 Tech Stack
+
+- **Framework**: Next.js 14
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Deployment**: Vercel
+
+## 🚀 Main Sections
+
+- **Experiences**
+  - TEMAS 19 - Military Court Simulation
+  - Quantium Labs - Legal Consulting
+  - Criminal Law Academic League
+  - Teaching Experience
+
+- **Places Visited**
+  - Brasília - DF
+    - Federal Supreme Court
+    - National Congress
+    - Superior Court of Justice
+
+## 💻 Development
+
+To run the project locally:
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📱 Responsiveness
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The website is fully responsive, adapting to:
+- Mobile devices
+- Tablets
+- Desktops
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Design Features
 
-## Learn More
+- **Animations**: Smooth transitions and micro-interactions
+- **Color Scheme**: 
+  - Primary: Amber
+  - Background: Slate
+  - Accents: Gold tones
+- **Layout**: Modern grid system with dynamic spacing
 
-To learn more about Next.js, take a look at the following resources:
+## 📸 Image Galleries
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Interactive photo galleries for each experience
+- Modal views with detailed captions
+- Smooth transitions between views
+- Responsive grid layouts
+- Touch-friendly navigation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔧 Local Setup
 
-## Deploy on Vercel
+To modify this portfolio:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Clone the repository
+git clone <repository-url>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Navigate to project
+cd gustavoportfolio
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the site.
