@@ -14,23 +14,24 @@ const Experiencias = () => {
           <div className="bg-slate-900 rounded-lg shadow-xl overflow-hidden">
             <div className="h-48 bg-slate-700 relative">
               <div className="absolute inset-0 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-amber-300">
-                  <path d="M19.42 9c-.14-3.92-3.5-7-7.42-7s-7.28 3.08-7.42 7"></path>
-                  <path d="M13 13l-3 3-3-3"></path>
-                  <path d="M10 12v8"></path>
-                </svg>
+                <img 
+                  src="/logo.png" 
+                  alt="Logo" 
+                  className="h-24 w-auto object-contain"
+                />
               </div>
             </div>
             <div className="p-6">
-              <h3 className="text-2xl mb-4 font-serif">Evento de Debate Esportivo</h3>
+              <h3 className="text-2xl mb-4 font-serif">Professor de Inglês - Fisk Sete Lagoas</h3>
               <p className="leading-relaxed mb-4">
-                Organizei e moderei debates sobre questões jurídicas no esporte, explorando temas como contratos de atletas, direito de imagem e responsabilidade civil em eventos esportivos.
+                Atuei como professor de inglês durante 8 meses, desenvolvendo planos de aula e 
+                ministrando classes para alunos de diferentes faixas etárias. Contribuí para o 
+                desenvolvimento linguístico e cultural dos estudantes através de metodologias dinâmicas.
               </p>
-              <p className="text-sm text-amber-300 mb-2">Conquistas:</p>
+              <p className="text-sm text-amber-300 mb-2">Realizações:</p>
               <ul className="list-disc pl-5 space-y-1 text-sm opacity-80">
-                <li>Reuniu mais de 100 participantes da faculdade</li>
-                <li>Contou com a presença de advogados especializados em direito desportivo</li>
-                <li>Recebeu reconhecimento institucional pela iniciativa inovadora</li>
+                <li>Planejamento e execução de aulas para diferentes níveis</li>
+                <li>Acompanhamento personalizado do progresso dos alunos</li>
               </ul>
             </div>
           </div>
@@ -38,11 +39,11 @@ const Experiencias = () => {
           <div className="bg-slate-900 rounded-lg shadow-xl overflow-hidden">
             <div className="h-48 bg-slate-700 relative">
               <div className="absolute inset-0 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-amber-300">
-                  <path d="M19.42 9c-.14-3.92-3.5-7-7.42-7s-7.28 3.08-7.42 7"></path>
-                  <path d="M13 13l-3 3-3-3"></path>
-                  <path d="M10 12v8"></path>
-                </svg>
+                <img 
+                  src="/logo.png" 
+                  alt="Logo" 
+                  className="h-24 w-auto object-contain"
+                />
               </div>
             </div>
             <div className="p-6">
@@ -60,6 +61,35 @@ const Experiencias = () => {
               </ul>
             </div>
           </div>
+
+          <div className="bg-slate-900 rounded-lg shadow-xl overflow-hidden md:col-span-2">
+            <div className="h-48 bg-slate-700 relative">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img 
+                  src="/logo.png" 
+                  alt="Logo TEMAS" 
+                  className="h-24 w-auto object-contain"
+                />
+              </div>
+            </div>
+            <div className="p-6">
+              <h3 className="text-2xl mb-4 font-serif">TEMAS 19 - China: Tribunal Militar do Extremo Oriente</h3>
+              <p className="leading-relaxed mb-4">
+                Participei da simulação temática do tribunal militar para o extremo oriente como 
+                Juiz Henry Reimburguer da França, responsável pelo julgamento de generais do alto 
+                escalão militar japonês. A experiência proporcionou a aplicação prática de 
+                conhecimentos em história e geopolítica para representar fielmente os interesses 
+                do personagem durante os debates.
+              </p>
+              <p className="text-sm text-amber-300 mb-2">Habilidades Aprimoradas:</p>
+              <ul className="list-disc pl-5 space-y-1 text-sm opacity-80">
+                <li>Retórica e estruturação lógica de argumentos</li>
+                <li>Identificação e contra-argumentação de falácias</li>
+                <li>Aplicação prática de conhecimentos históricos e geopolíticos</li>
+                <li>Tomada de decisão em cenários complexos</li>
+              </ul>
+            </div>
+          </div>
         </div>
         
         <div className="mt-12 p-8 bg-slate-900 rounded-lg shadow-xl">
@@ -73,7 +103,7 @@ const Experiencias = () => {
               <div className="text-amber-300 text-lg font-medium">Pesquisa</div>
             </div>
             
-            <div className="bg-slate-800 p-4 rounded-lg text-center">
+            <div className= "bg-slate-800 p-4 rounded-lg text-center">
               <div className="text-amber-300 text-lg font-medium">Liderança</div>
             </div>
             

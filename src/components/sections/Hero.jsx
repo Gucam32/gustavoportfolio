@@ -21,7 +21,7 @@ const Hero = ({ scrollPosition }) => {
         className="z-10 max-w-4xl text-center"
       >
         <div className="mx-auto w-20 h-px bg-amber-300 mb-8" />
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif tracking-wide leading-tight">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl tracking-wide leading-tight font-serif font-semibold">
           Gustavo Henrique
           <br />
           <span className="text-amber-200">França Campos</span>
