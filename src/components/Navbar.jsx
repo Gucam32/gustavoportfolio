@@ -24,7 +24,8 @@ const Navbar = ({ scrollPosition }) => {
     { id: 'trajetoria', label: 'Trajetória' },
     { id: 'filosofia', label: 'Filosofia' },
     { id: 'direito', label: 'Direito' },
-    { id: 'experiencias', label: 'Experiências' }
+    { id: 'experiencias', label: 'Experiências' },
+    { id: 'lugares', label: 'Lugares' }
   ];
 
   return (

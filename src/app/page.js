@@ -12,6 +12,7 @@ import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
 import Inspiration from "@/components/sections/Inspiration";
 import PorqueDireito from "@/components/sections/PorqueDireito";
+import Places from "@/components/sections/Places";
 
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -69,8 +70,8 @@ export default function Home() {
         <Trajetoria />
         <Filosofia />
         <Direito />
-        <Inspiration /> 
         <Experiencias />
+        <Places />
         <Footer />
       </div>
     </div>
