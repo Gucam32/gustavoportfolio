@@ -70,6 +70,7 @@ export default function Home() {
         <Trajetoria />
         <Filosofia />
         <Direito />
+        <Inspiration /> 
         <Experiencias />
         <Places />
         <Footer />
