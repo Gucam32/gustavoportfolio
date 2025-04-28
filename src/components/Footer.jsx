@@ -1,3 +1,5 @@
+import { ExternalLink } from 'lucide-react';
+
 export default function Footer() {
   return (
     <footer className="py-12 px-6 bg-slate-900">
@@ -29,7 +31,7 @@ export default function Footer() {
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                 <rect x="2" y="9" width="4" height="12"></rect>
                 <circle cx="4" cy="4" r="2"></circle>
-              </svg>
+              </svg>  
             </a>
           </div>
         </div>
@@ -41,7 +43,7 @@ export default function Footer() {
           <p className="mt-2">Estudante de Direito na Faculdade Santo Agostinho - AFYA</p>
         </div>
         
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex flex-col items-center space-y-4">
           <div className="flex items-center space-x-2 text-amber-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
@@ -49,6 +51,22 @@ export default function Footer() {
               <line x1="12" y1="16" x2="12.01" y2="16"></line>
             </svg>
             <span className="text-sm">Este portfolio é uma representação artística e profissional</span>
+          </div>
+          
+          <div className="text-sm text-slate-400">
+            Desenvolvido por{' '}
+            <a 
+              href="https://victordev.is-a.dev" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-amber-300 hover:text-amber-400 transition-colors group inline-flex items-center gap-1"
+            >
+              Victor Humberto
+              <ExternalLink 
+                size={14} 
+                className="opacity-60 group-hover:opacity-100 transition-opacity" 
+              />
+            </a>
           </div>
         </div>
       </div>

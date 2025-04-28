@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = ({ scrollPosition }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,6 +29,37 @@ const Navbar = ({ scrollPosition }) => {
     { id: 'experiencias', label: 'Experiências' },
     { id: 'lugares', label: 'Lugares' }
   ];
+
+  const menuVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
     <nav 
@@ -65,76 +98,88 @@ const Navbar = ({ scrollPosition }) => {
         </div>
         
         <button 
-          className="md:hidden text-white z-50 relative"
+          className="md:hidden text-white z-50 relative p-2"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
-          <div className="w-6 h-6 flex items-center justify-center">
-            <span className={`transform transition-all duration-500 ease-in-out ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''} absolute w-6 h-0.5 bg-white`}></span>
-            <span className={`transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'} absolute w-6 h-0.5 bg-white`}></span>
-            <span className={`transform transition-all duration-500 ease-in-out ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''} absolute w-6 h-0.5 bg-white`}></span>
-          </div>
+          <AnimatePresence mode="wait">
+            {isMenuOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X size={24} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Menu size={24} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
       </div>
       
-      {/* Full-screen Mobile Menu with Blur Effect */}
-      <div 
-        className={`fixed inset-0 bg-black/90 backdrop-blur-xl transition-all duration-700 ease-in-out ${
-          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-        }`}
-        style={{ zIndex: 40 }}
-      >
-        <div className="flex flex-col justify-center items-center h-full px-6">
-          {menuItems.map((item, index) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className="w-full text-center py-6 text-3xl font-serif text-white hover:text-amber-300 transition-all duration-500 ease-out transform"
-              style={{ 
-                opacity: isMenuOpen ? 1 : 0,
-                transform: isMenuOpen ? 'translateY(0)' : 'translateY(40px)',
-                transitionDelay: `${150 + index * 150}ms` 
-              }}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item.label}
-            </a>
-          ))}
-          
-          {/* Decorative elements */}
-          <div 
-            className="absolute top-0 left-0 w-32 h-32 rounded-full bg-amber-500/20 blur-3xl"
-            style={{ 
-              opacity: isMenuOpen ? 0.5 : 0,
-              transform: isMenuOpen ? 'scale(1)' : 'scale(0.8)',
-              transition: 'all 1s ease-out',
-              transitionDelay: '400ms'
-            }}
-          ></div>
-          
-          <div 
-            className="absolute bottom-0 right-0 w-40 h-40 rounded-full bg-amber-500/10 blur-3xl"
-            style={{ 
-              opacity: isMenuOpen ? 0.5 : 0,
-              transform: isMenuOpen ? 'scale(1)' : 'scale(0.8)',
-              transition: 'all 1s ease-out',
-              transitionDelay: '600ms'
-            }}
-          ></div>
-          
-          <div 
-            className="absolute bottom-10 w-full text-center text-white/70 text-sm opacity-0"
-            style={{ 
-              opacity: isMenuOpen ? 0.7 : 0,
-              transform: isMenuOpen ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.5s ease-out',
-              transitionDelay: '800ms'
-            }}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={menuVariants}
+            className="fixed inset-0 bg-black/90 backdrop-blur-xl"
+            style={{ zIndex: 40 }}
           >
-            <p className="font-serif">© {new Date().getFullYear()} Gustavo Campos</p>
-          </div>
-        </div>
-      </div>
+            <div className="flex flex-col justify-center items-center h-full px-6">
+              {menuItems.map((item, index) => (
+                <motion.a
+                  key={item.id}
+                  variants={itemVariants}
+                  href={`#${item.id}`}
+                  className="w-full text-center py-6 text-3xl font-serif text-white hover:text-amber-300 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </motion.a>
+              ))}
+              
+              <motion.div 
+                className="absolute top-0 left-0 w-32 h-32 rounded-full bg-amber-500/20 blur-3xl"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.5, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              />
+              
+              <motion.div 
+                className="absolute bottom-0 right-0 w-40 h-40 rounded-full bg-amber-500/10 blur-3xl"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.5, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 1, delay: 0.6 }}
+              />
+              
+              <motion.div 
+                className="absolute bottom-10 w-full text-center text-white/70 text-sm"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 0.7, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
+                <p className="font-serif">© {new Date().getFullYear()} Gustavo Campos</p>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
