@@ -15,7 +15,7 @@ const Places = () => {
         { url: "/places/brasilia/stfout.jpeg", caption: "Fachada do STF" },
         { url: "/places/brasilia/stfout2.jpeg", caption: "Fachada do STF - 2" },
         { url: "/places/brasilia/senadofederal.jpeg", caption: "Senado Federal" },
-        { url: "/places/brasilia/alvorada.jpeg", caption: "Palacio da Alvorada" },
+        { url: "/places/brasilia/alvorada.jpeg", caption: "Palacio do Planalto" },
         { url: "/places/brasilia/deputados.jpeg", caption: "Câmara dos Deputados "},
         { url: "/places/brasilia/catedral.jpeg", caption: "Catedral de Brasilia"},
         { url: "/places/brasilia/arteindigena.jpeg", caption: "Artes Indigenas"},
