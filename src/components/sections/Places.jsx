@@ -18,7 +18,7 @@ const Places = () => {
         { url: "/places/brasilia/alvorada.jpeg", caption: "Palacio do Planalto" },
         { url: "/places/brasilia/deputados.jpeg", caption: "Câmara dos Deputados "},
         { url: "/places/brasilia/catedral.jpeg", caption: "Catedral de Brasilia"},
-        { url: "/places/brasilia/arteindigena.jpeg", caption: "Artes Indigenas"},
+        { url: "/places/brasilia/arteindigena.jpeg", caption: "Artes Indígenas"},
         { url: "/places/brasilia/soldados.jpeg", caption: "Vista"},
 
         // Add more photos here
@@ -28,7 +28,7 @@ const Places = () => {
   ];
 
   return (
-    <section id="lugares" className="py-24 px-6 bg-slate-900 min-h-screen">
+    <section id="lugares" className="relative py-24 px-6 bg-slate-900 min-h-screen">
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center mb-16">
           <div className="h-px flex-grow bg-amber-300"></div>
@@ -43,7 +43,7 @@ const Places = () => {
               layoutId={`place-${place.id}`}
               onClick={() => setSelectedPlace(place)}
               className="cursor-pointer bg-slate-800 rounded-lg overflow-hidden shadow-xl 
-                transform transition-transform duration-300 hover:scale-105"
+                transform transition-all duration-300 hover:scale-105"
               whileHover={{ y: -5 }}
             >
               <div className="relative h-64">
@@ -64,17 +64,19 @@ const Places = () => {
 
       <AnimatePresence>
         {selectedPlace && (
-          <>
+          <div id="modal-container" className="relative z-50">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedPlace(null)}
-              className="fixed inset-0 bg-black/90 z-50 backdrop-blur-sm"
+              className="fixed inset-0 bg-black/90 backdrop-blur-sm"
+              style={{ zIndex: 1000 }}
             />
             <motion.div
               layoutId={`place-${selectedPlace.id}`}
-              className="fixed inset-4 md:inset-16 z-50 bg-slate-900 rounded-lg overflow-hidden"
+              className="fixed inset-4 md:inset-16 bg-slate-900 rounded-lg overflow-hidden"
+              style={{ zIndex: 1001 }}
             >
               <div className="h-full overflow-y-auto">
                 <button
@@ -96,7 +98,7 @@ const Places = () => {
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
+                        transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
                         className="relative aspect-video"
                       >
                         <img
@@ -113,7 +115,7 @@ const Places = () => {
                 </div>
               </div>
             </motion.div>
-          </>
+          </div>
         )}
       </AnimatePresence>
     </section>

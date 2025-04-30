@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Experiencias = () => {
   const [selectedExp, setSelectedExp] = useState(null);
+  const buttonRefs = useRef({});
+  const modalContainerRef = useRef(null);
 
   const experiences = {
     temas: {
@@ -81,22 +83,88 @@ const Experiencias = () => {
     }
   };
 
-  const modalVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      transition: { duration: 0.3, ease: "easeOut" }
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.8,
-      transition: { duration: 0.3, ease: "easeIn" }
-    }
+  // Enhanced iOS-like spring animation
+  const springTransition = {
+    type: "spring",
+    stiffness: 300,
+    damping: 30
   };
 
+  // Get the exact position and size of the button for the morphing animation
+  const getButtonRect = (key) => {
+    if (!buttonRefs.current[key]) return { top: 0, left: 0, width: 0, height: 0 };
+    
+    const rect = buttonRefs.current[key].getBoundingClientRect();
+    const scrollY = window.scrollY;
+    
+    return {
+      top: rect.top + scrollY,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      x: rect.x,
+      y: rect.y
+    };
+  };
+
+  const handleOpenExp = (key) => {
+    const buttonRect = getButtonRect(key);
+    
+    // Calculate scroll position to ensure animation starts from visible area
+    const scrollY = window.scrollY;
+    
+    setSelectedExp({ 
+      key, 
+      buttonRect: {
+        ...buttonRect,
+        top: buttonRect.top - scrollY,
+        scrollY
+      }
+    });
+  };
+
+  const handleCloseExp = () => {
+    // Update button position before animation starts
+    if (selectedExp) {
+      const updatedRect = getButtonRect(selectedExp.key);
+      setSelectedExp(prev => ({ 
+        ...prev, 
+        buttonRect: {
+          ...updatedRect,
+          top: updatedRect.top - window.scrollY,
+          scrollY: window.scrollY
+        }
+      }));
+    }
+    
+    // Add a slight delay to allow the update to take effect
+    setTimeout(() => {
+      setSelectedExp(null);
+    }, 50);
+  };
+
+  const renderExpButton = (key) => (
+    <button
+      ref={el => buttonRefs.current[key] = el}
+      onClick={() => handleOpenExp(key)}
+      className="bg-slate-800 hover:bg-slate-700 text-amber-300 px-4 py-2 rounded-full
+        shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 group"
+    >
+      Ver mais fotos
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+    </button>
+  );
+
   return (
-    <section id="experiencias" className="py-24 px-6 bg-slate-800">
+    <section id="experiencias" className="py-24 px-6 bg-slate-800 relative">
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center mb-16">
           <div className="h-px flex-grow bg-amber-300"></div>
@@ -136,24 +204,7 @@ const Experiencias = () => {
                     </ul>
                   </>
                 )}
-                {(key !== 'fisk' && key !== 'liga') && (
-                  <button
-                    onClick={() => setSelectedExp(key)}
-                    className="bg-slate-800 hover:bg-slate-700 text-amber-300 px-4 py-2 rounded-full
-                      shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 group"
-                  >
-                    Ver mais fotos
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
-                )}
+                {(key !== 'fisk' && key !== 'liga') && renderExpButton(key)}
               </div>
             </motion.div>
           ))}
@@ -183,54 +234,95 @@ const Experiencias = () => {
         <AnimatePresence>
           {selectedExp && (
             <>
+              {/* Overlay */}
               <motion.div
+                className="fixed inset-0 bg-black/80 backdrop-blur-md z-50"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                onClick={() => setSelectedExp(null)}
-                className="fixed inset-0 bg-black/90 z-50 backdrop-blur-sm"
+                onClick={handleCloseExp}
+                transition={{ duration: 0.25 }}
               />
-              <motion.div
-                variants={modalVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="fixed inset-4 md:inset-16 z-50 bg-slate-900 rounded-lg overflow-hidden"
-              >
-                <div className="h-full overflow-y-auto">
-                  <button
-                    onClick={() => setSelectedExp(null)}
-                    className="absolute top-4 right-4 text-white p-2 z-10 hover:text-amber-300 transition-colors"
+              
+              {/* The container for the morphing effect */}
+              <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden" ref={modalContainerRef}>
+                {/* The morphing element */}
+                <motion.div
+                  className="absolute bg-slate-900 origin-top-left overflow-hidden shadow-2xl"
+                  initial={{
+                    borderRadius: "9999px", // Full rounded like the button
+                    x: selectedExp.buttonRect.x,
+                    y: selectedExp.buttonRect.y,
+                    width: selectedExp.buttonRect.width,
+                    height: selectedExp.buttonRect.height,
+                    opacity: 1
+                  }}
+                  animate={{
+                    borderRadius: "16px",
+                    x: window.innerWidth / 2 - window.innerWidth * 0.45,
+                    y: window.innerHeight / 2 - window.innerHeight * 0.4,
+                    width: "90vw",
+                    height: "80vh",
+                    opacity: 1
+                  }}
+                  exit={{
+                    borderRadius: "9999px",
+                    x: selectedExp.buttonRect.x,
+                    y: selectedExp.buttonRect.y,
+                    width: selectedExp.buttonRect.width,
+                    height: selectedExp.buttonRect.height,
+                    opacity: 0
+                  }}
+                  transition={springTransition}
+                >
+                  {/* The content container - fades in after the morphing */}
+                  <motion.div 
+                    className="relative w-full h-full pointer-events-auto"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ delay: 0.15, duration: 0.2 }}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
+                    <button
+                      onClick={handleCloseExp}
+                      className="absolute top-4 right-4 z-10 p-2 text-white bg-slate-800/50 hover:bg-slate-700/70 rounded-full backdrop-blur-sm hover:text-amber-300 transition-colors"
+                      aria-label="Close modal"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
 
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {experiences[selectedExp].photos.map((photo, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          className="relative aspect-video"
-                        >
-                          <img
-                            src={photo.url}
-                            alt={photo.caption}
-                            className="w-full h-full object-cover rounded-lg"
-                          />
-                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                            <p className="text-sm text-white">{photo.caption}</p>
-                          </div>
-                        </motion.div>
-                      ))}
+                    <div className="p-6 h-full overflow-y-auto">
+                      <h3 className="text-2xl font-serif mb-6">{experiences[selectedExp.key].title}</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {experiences[selectedExp.key].photos.map((photo, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 + index * 0.1 }}
+                            className="relative aspect-[4/3] group"
+                          >
+                            <img
+                              src={photo.url}
+                              alt={photo.caption}
+                              className="w-full h-full object-cover rounded-lg shadow-lg"
+                            />
+                            {photo.caption && (
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                                <p className="absolute bottom-0 left-0 right-0 p-4 text-sm text-white">
+                                  {photo.caption}
+                                </p>
+                              </div>
+                            )}
+                          </motion.div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </motion.div>
+                  </motion.div>
+                </motion.div>
+              </div>
             </>
           )}
         </AnimatePresence>

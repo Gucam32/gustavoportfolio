@@ -23,6 +23,7 @@ const Navbar = ({ scrollPosition }) => {
   const headerBlur = Math.min(scrollPosition / 50, 10);
 
   const menuItems = [
+    { id: 'home', label: 'Home' },
     { id: 'trajetoria', label: 'Trajetória' },
     { id: 'filosofia', label: 'Filosofia' },
     { id: 'direito', label: 'Direito' },
@@ -31,39 +32,58 @@ const Navbar = ({ scrollPosition }) => {
   ];
 
   const menuVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
+    initial: {
+      opacity: 0,
+      height: 0
+    },
+    animate: {
+      opacity: 1,
+      height: "100vh",
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut",
+        staggerChildren: 0.1,
+        when: "beforeChildren"
+      }
+    },
+    exit: {
+      opacity: 0,
+      height: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+        when: "afterChildren"
+      }
+    }
+  };
+
+  const itemVariants = {
+    initial: { 
+      opacity: 0,
+      y: 50
+    },
+    animate: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
-        staggerChildren: 0.1
+        duration: 0.3,
+        ease: "easeOut"
       }
     },
     exit: {
       opacity: 0,
       y: -20,
       transition: {
-        duration: 0.3
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 0.2
       }
     }
   };
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isMenuOpen ? 'border-none' : 'border-b border-white/20'
       }`}
       style={{
@@ -131,52 +151,51 @@ const Navbar = ({ scrollPosition }) => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            initial="hidden"
-            animate="visible"
+            initial="initial"
+            animate="animate"
             exit="exit"
             variants={menuVariants}
-            className="fixed inset-0 bg-black/90 backdrop-blur-xl"
+            className="fixed inset-0 bg-black/95 backdrop-blur-lg"
             style={{ zIndex: 40 }}
           >
-            <div className="flex flex-col justify-center items-center h-full px-6">
-              {menuItems.map((item, index) => (
+            <div className="flex flex-col justify-center items-center h-full px-6 space-y-6">
+              {menuItems.map((item) => (
                 <motion.a
                   key={item.id}
                   variants={itemVariants}
                   href={`#${item.id}`}
-                  className="w-full text-center py-6 text-3xl font-serif text-white hover:text-amber-300 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
+                  className="relative w-full text-center py-4 text-2xl font-serif text-white/90 hover:text-amber-300 transition-colors"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {item.label}
                 </motion.a>
               ))}
-              
-              <motion.div 
-                className="absolute top-0 left-0 w-32 h-32 rounded-full bg-amber-500/20 blur-3xl"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.5, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 1, delay: 0.4 }}
-              />
-              
-              <motion.div 
-                className="absolute bottom-0 right-0 w-40 h-40 rounded-full bg-amber-500/10 blur-3xl"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.5, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 1, delay: 0.6 }}
-              />
-              
-              <motion.div 
-                className="absolute bottom-10 w-full text-center text-white/70 text-sm"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 0.7, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
-                <p className="font-serif">© {new Date().getFullYear()} Gustavo Campos</p>
-              </motion.div>
             </div>
+            
+            <motion.div 
+              className="absolute top-0 left-0 w-32 h-32 rounded-full bg-amber-500/20 blur-3xl"
+              variants={{
+                initial: { opacity: 0, scale: 0.8 },
+                animate: { opacity: 0.5, scale: 1 },
+                exit: { opacity: 0, scale: 0.8 }
+              }}
+            />
+            
+            <motion.div 
+              className="absolute bottom-10 w-full text-center text-white/50 text-sm"
+              variants={{
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                exit: { opacity: 0, y: 20 }
+              }}
+            >
+              <p className="font-serif">© {new Date().getFullYear()} Gustavo Campos</p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
