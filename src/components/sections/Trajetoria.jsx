@@ -27,10 +27,10 @@ const Trajetoria = () => {
                 Origens
               </h3>
               <p className="leading-relaxed text-amber-50">
-                Nascido em Belo Horizonte e criado em Sete Lagoas, Minas Gerais, desde cedo
+                Nascido em Belo Horizonte e criado na cidade de Sete Lagoas, em Minas Gerais, desde cedo
                 demonstrei interesse pelos debates sobre justiça e sociedade.
                 Minha jornada começou com questionamentos sobre os fundamentos
-                das relações humanas e os princípios que regem nossa convivência
+                das relações humanas e sobre os princípios que regem nossa convivência
                 social.
               </p>
             </div>
@@ -44,7 +44,7 @@ const Trajetoria = () => {
               </h3>
               <p className="leading-relaxed text-amber-50">
                 Durante minha formação básica, desenvolvi habilidades de
-                oratória e argumentação que me permitiram destacar em debates e
+                oratória e de argumentação que me permitiram destacar em debates e
                 apresentações. A leitura de clássicos da literatura brasileira e
                 mundial ampliou minha visão crítica sobre a sociedade.
               </p>
