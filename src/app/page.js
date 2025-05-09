@@ -19,14 +19,14 @@ export default function Home() {
   const [viewportHeight, setViewportHeight] = useState(0);
   const { scrollY } = useScroll({
     smooth: true,
-    smoothTime: 0.6
+    smoothTime: 0.6,
   });
-  
+
   // Calculate opacity for hero background
   const bgOpacity = useTransform(
     scrollY,
     [0, viewportHeight * 0.5], // Use state variable instead of window.innerHeight
-    [1, 0]
+    [1, 0],
   );
 
   useEffect(() => {
@@ -34,8 +34,8 @@ export default function Home() {
     setViewportHeight(window.innerHeight);
 
     // Add smooth scroll behavior to html element
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
+    document.documentElement.style.scrollBehavior = "smooth";
+
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
     };
@@ -50,27 +50,27 @@ export default function Home() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
-      document.documentElement.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = "auto";
     };
   }, []);
 
   return (
-    <div className="min-h-screen text-white">
-      <motion.div 
+    <div className="min-h-screen text-white bg-gray-950">
+      <motion.div
         className="fixed inset-0 bg-cover bg-center z-0"
         style={{
           backgroundImage: "url('/bg.jpg')",
-          opacity: bgOpacity
+          opacity: bgOpacity,
         }}
       />
       <div className="relative z-10">
         <Navbar scrollPosition={scrollPosition} />
         <Hero scrollPosition={scrollPosition} />
-        <PorqueDireito/>
+        <PorqueDireito />
         <Trajetoria />
         <Filosofia />
         <Direito />
-        <Inspiration /> 
+        <Inspiration />
         <Experiencias />
         <Places />
         <Footer />
