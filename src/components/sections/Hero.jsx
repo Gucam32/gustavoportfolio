@@ -3,7 +3,10 @@ import { motion } from "framer-motion";
 
 const Hero = ({ scrollPosition }) => {
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
+    >
       {/* Animated background elements */}
       <div className="absolute inset-0 z-0"></div>
       <div

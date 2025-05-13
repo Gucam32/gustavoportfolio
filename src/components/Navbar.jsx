@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = ({ scrollPosition }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,13 +9,13 @@ const Navbar = ({ scrollPosition }) => {
   // Prevent scrolling when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
 
@@ -23,18 +23,18 @@ const Navbar = ({ scrollPosition }) => {
   const headerBlur = Math.min(scrollPosition / 50, 10);
 
   const menuItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'trajetoria', label: 'Trajetória' },
-    { id: 'filosofia', label: 'Filosofia' },
-    { id: 'direito', label: 'Direito' },
-    { id: 'experiencias', label: 'Experiências' },
-    { id: 'lugares', label: 'Lugares' }
+    { id: "home", label: "Home" },
+    { id: "trajetoria", label: "Trajetória" },
+    { id: "filosofia", label: "Filosofia" },
+    { id: "direito", label: "Direito" },
+    { id: "experiencias", label: "Experiências" },
+    { id: "lugares", label: "Lugares" },
   ];
 
   const menuVariants = {
     initial: {
       opacity: 0,
-      height: 0
+      height: 0,
     },
     animate: {
       opacity: 1,
@@ -43,8 +43,8 @@ const Navbar = ({ scrollPosition }) => {
         duration: 0.4,
         ease: "easeInOut",
         staggerChildren: 0.1,
-        when: "beforeChildren"
-      }
+        when: "beforeChildren",
+      },
     },
     exit: {
       opacity: 0,
@@ -54,41 +54,43 @@ const Navbar = ({ scrollPosition }) => {
         ease: "easeInOut",
         staggerChildren: 0.05,
         staggerDirection: -1,
-        when: "afterChildren"
-      }
-    }
+        when: "afterChildren",
+      },
+    },
   };
 
   const itemVariants = {
-    initial: { 
+    initial: {
       opacity: 0,
-      y: 50
+      y: 50,
     },
     animate: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.3,
-        ease: "easeOut"
-      }
+        ease: "easeOut",
+      },
     },
     exit: {
       opacity: 0,
       y: -20,
       transition: {
-        duration: 0.2
-      }
-    }
+        duration: 0.2,
+      },
+    },
   };
 
   return (
-    <nav 
+    <nav
       className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isMenuOpen ? 'border-none' : 'border-b border-white/20'
+        isMenuOpen ? "border-none" : "border-b border-white/20"
       }`}
       style={{
-        backgroundColor: isMenuOpen ? 'transparent' : `rgba(0, 0, 0, ${headerOpacity * 0.4})`,
-        backdropFilter: isMenuOpen ? 'none' : `blur(${headerBlur}px)`,
+        backgroundColor: isMenuOpen
+          ? "transparent"
+          : `rgba(0, 0, 0, ${headerOpacity * 0.4})`,
+        backdropFilter: isMenuOpen ? "none" : `blur(${headerBlur}px)`,
       }}
     >
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
@@ -101,23 +103,25 @@ const Navbar = ({ scrollPosition }) => {
             className="rounded-full filter brightness-100"
           />
           <div className="flex flex-col">
-            <span className="text-xl font-serif tracking-wide text-white">Gustavo Campos</span>
+            <span className="text-xl font-serif tracking-wide text-white">
+              Gustavo Campos
+            </span>
           </div>
         </div>
-        
+
         <div className="hidden md:flex space-x-6 font-serif text-base">
           {menuItems.map((item) => (
-            <a 
+            <a
               key={item.id}
-              href={`#${item.id}`} 
+              href={`#${item.id}`}
               className="hover:text-amber-300 transition-colors border-b-2 border-transparent hover:border-amber-300"
             >
               {item.label}
             </a>
           ))}
         </div>
-        
-        <button 
+
+        <button
           className="md:hidden text-white z-50 relative p-2"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
@@ -147,10 +151,10 @@ const Navbar = ({ scrollPosition }) => {
           </AnimatePresence>
         </button>
       </div>
-      
+
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial="initial"
             animate="animate"
             exit="exit"
@@ -167,7 +171,9 @@ const Navbar = ({ scrollPosition }) => {
                   className="relative w-full text-center py-4 text-2xl font-serif text-white/90 hover:text-amber-300 transition-colors"
                   onClick={() => {
                     setIsMenuOpen(false);
-                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                    document
+                      .getElementById(item.id)
+                      ?.scrollIntoView({ behavior: "smooth" });
                   }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -176,25 +182,27 @@ const Navbar = ({ scrollPosition }) => {
                 </motion.a>
               ))}
             </div>
-            
-            <motion.div 
+
+            <motion.div
               className="absolute top-0 left-0 w-32 h-32 rounded-full bg-amber-500/20 blur-3xl"
               variants={{
                 initial: { opacity: 0, scale: 0.8 },
                 animate: { opacity: 0.5, scale: 1 },
-                exit: { opacity: 0, scale: 0.8 }
+                exit: { opacity: 0, scale: 0.8 },
               }}
             />
-            
-            <motion.div 
+
+            <motion.div
               className="absolute bottom-10 w-full text-center text-white/50 text-sm"
               variants={{
                 initial: { opacity: 0, y: 20 },
                 animate: { opacity: 1, y: 0 },
-                exit: { opacity: 0, y: 20 }
+                exit: { opacity: 0, y: 20 },
               }}
             >
-              <p className="font-serif">© {new Date().getFullYear()} Gustavo Campos</p>
+              <p className="font-serif">
+                © {new Date().getFullYear()} Gustavo Campos
+              </p>
             </motion.div>
           </motion.div>
         )}
